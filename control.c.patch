@@ -1,0 +1,19 @@
+--- xl2tpd-1.2.8/control.c.orig	2011-02-23 08:10:21.000000000 +0300
++++ xl2tpd-1.2.8/control.c	2011-07-16 00:01:59.000000000 +0400
+@@ -792,10 +792,14 @@
+             return -EINVAL;
+         }
+         c->state = ICCN;
+-        if (t->fc & SYNC_FRAMING)
++     /*   if (t->fc & SYNC_FRAMING)
+             c->frame = SYNC_FRAMING;
+         else
+-            c->frame = ASYNC_FRAMING;
++            c->frame = ASYNC_FRAMING;*/
++        if (t->fc & ASYNC_FRAMING)
++             c->frame = ASYNC_FRAMING;
++        else
++            c->frame = SYNC_FRAMING; 
+ 
+         buf = new_outgoing (t);
+         add_message_type_avp (buf, ICCN);
